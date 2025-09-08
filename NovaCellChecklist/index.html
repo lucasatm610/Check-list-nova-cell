@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist - Nova Cell</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #27ae60;
+      margin-bottom: 15px;
+    }
+    h2 {
+      margin-top: 20px;
+      color: #34495e;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #219150;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo da Loja -->
+    <div class="logo">📱 Nova Cell</div>
+    <h1>Checklist de Aparelho</h1>
+    
+    <form id="checklistForm">
+      <h2>Defeitos</h2>
+      <label><input type="checkbox" name="defeito" value="Display quebrado"> Display quebrado</label>
+      <label><input type="checkbox" name="defeito" value="Vidro trincado"> Vidro trincado</label>
+      <label><input type="checkbox" name="defeito" value="Não pega chip"> Não pega chip</label>
+      <label><input type="checkbox" name="defeito" value="Não pega Wi-Fi"> Não pega Wi-Fi</label>
+      <label><input type="checkbox" name="defeito" value="Câmera frontal não funciona"> Câmera frontal não funciona</label>
+      <label><input type="checkbox" name="defeito" value="Câmera traseira não funciona"> Câmera traseira não funciona</label>
+      <label><input type="checkbox" name="defeito" value="Problema no conector de carga"> Problema no conector de carga</label>
+
+      <h2>Acessórios</h2>
+      <label><input type="checkbox" name="acessorio" value="Possui caixa"> Possui caixa</label>
+      <label><input type="checkbox" name="acessorio" value="Tem carregador"> Tem carregador</label>
+
+      <h2>Dados do Cliente</h2>
+      <input type="text" name="nome" placeholder="Seu nome" required>
+      <input type="text" name="bairro" placeholder="Seu bairro" required>
+      <select name="tipo_residencia" required>
+        <option value="">Selecione</option>
+        <option value="Casa">Casa</option>
+        <option value="Apartamento">Apartamento</option>
+      </select>
+      <input type="text" name="numero" placeholder="Número da casa/apartamento" required>
+
+      <button type="submit">Enviar para WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("checklistForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let defeitos = [...document.querySelectorAll('input[name="defeito"]:checked')].map(e => e.value).join(", ");
+      let acessorios = [...document.querySelectorAll('input[name="acessorio"]:checked')].map(e => e.value).join(", ");
+
+      let nome = document.querySelector('input[name="nome"]').value;
+      let bairro = document.querySelector('input[name="bairro"]').value;
+      let tipo = document.querySelector('select[name="tipo_residencia"]').value;
+      let numero = document.querySelector('input[name="numero"]').value;
+
+      let mensagem = `📱 Nova Cell - Checklist\n\n👤 Nome: ${nome}\n🏘️ Bairro: ${bairro}\n🏠 Tipo: ${tipo}\n🔢 Número: ${numero}\n\n📋 Defeitos: ${defeitos || "Nenhum"}\n🎁 Acessórios: ${acessorios || "Nenhum"}`;
+
+      let url = `https://wa.me/5517997035943?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, "_blank");
+    });
+  </script>
+</body>
+</html>
